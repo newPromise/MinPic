@@ -1,6 +1,6 @@
 <template>
   <div class="compress-page">
-    <upload-page v-show="isUploadPage" @upload="imageUploaded"></upload-page>
+    <upload-page v-show="isUploadPage" @upload="imageUploaded" @uploadDir="imageDirSelected"></upload-page>
     <div class="compress-pictures" v-show="!isUploadPage">
       <OpeCom @compress="compressPics" :isCompressing="isCompressing"></OpeCom>
       <div class="anew-append">
@@ -40,12 +40,30 @@ export default {
       isUploadPage: true,
       imgPaths: [],
       imgDatas: [],
-      isCompressing: false
+      isCompressing: false,
+      compressTypes: ['PNG', 'JPG', 'JPEG']
     }
   },
   methods: {
     anewSelect() {
       Object.assign(this.$data, this.$options.data());
+    },
+    // 当选中一个文件夹的时候，同步该文件夹下的所有图片
+    imageDirSelected(paths) {
+      const image = require('imageinfo')
+      const dirPath = paths[0]
+      const fileList = fs.readdirSync(dirPath)
+      const imagePathList = []
+      fileList.forEach(file => {
+        const filePath = `${dirPath}/${file}`
+        const readFile = fs.readFileSync(`${dirPath}/${file}`)
+        const imageInfo = image(readFile)
+        console.log('imageInfo', imageInfo)
+        if (imageInfo.mimeType && this.compressTypes.includes(imageInfo.format)) {
+          imagePathList.push(filePath)
+        }
+      })
+      this.imageUploaded(imagePathList)
     },
     imageUploaded(paths) {
       this.imgPaths = paths;

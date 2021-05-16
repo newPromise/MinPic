@@ -5977,6 +5977,11 @@
   "resolved" "https://registry.nlark.com/ignore/download/ignore-5.1.8.tgz"
   "version" "5.1.8"
 
+"imageinfo@^1.0.4":
+  "integrity" "sha1-HdJFbsuW/DlfCqEXnEZ9+z1deio="
+  "resolved" "https://registry.nlark.com/imageinfo/download/imageinfo-1.0.4.tgz"
+  "version" "1.0.4"
+
 "imagemin-gifsicle@^5.2.0":
   "integrity" "sha1-N4FSTEV2Eu8EkWrzQkGitCv8tAo="
   "resolved" "https://registry.npm.taobao.org/imagemin-gifsicle/download/imagemin-gifsicle-5.2.0.tgz"
