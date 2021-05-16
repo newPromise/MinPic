@@ -63,6 +63,7 @@ export default {
       margin-left: 10px;
       font-size: 15px;
       color: black;
+      word-break: break-all;
     }
   }
   .pic-operate {
