@@ -15,9 +15,11 @@
         </div>
       </div>
     </div>
-    <el-button class="operate-btn" type="primary" :loading="isCompressing" @click="compress" :disabled="isCompressing">
-      {{ isCompressing ? '压缩中' : '开启压缩' }}
-    </el-button>
+    <div class="operate-actions">
+       <el-button class="operate-btn" type="primary" :loading="isCompressing" @click="compress" :disabled="isCompressing">
+          {{ isCompressing ? '压缩中' : '开启压缩' }}
+        </el-button>
+    </div>
   </div>
 </template>
 
@@ -65,13 +67,11 @@ export default {
 <style lang="scss">
 .operate-compress {
   padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 20px;
   .operate-params {
     font-size: 14px;
     width: 100%;
+    padding: 15px 0;
     .compress-quality {
       margin-bottom: 5px;
       width: 80%;
@@ -93,6 +93,13 @@ export default {
         }
       }
     }
+  }
+  .operate-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0;
+    border-top: 1px dashed gray;;
   }
   .operate-btn {
     padding: 10px 20px;
