@@ -4,7 +4,9 @@
       <img :src="img.src" alt="">
       <span class="name">{{img.name}}</span>
     </div>
-    <div class="pic-size col-4">{{img.size}} MB / {{img.afterCompressSize}} MB</div>
+    <div class="pic-size col-4">{{img.size}} MB / 
+      {{ img.afterCompressSize ? `${img.afterCompressSize} MB` : '--' }}
+    </div>
     <!-- <div class="pic-create-time col-3">{{img.aTime}}</div> -->
     <div class="pic-operate col-2">
       <i class="el-icon-delete" @click="deleteImage"></i>

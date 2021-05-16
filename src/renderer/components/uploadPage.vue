@@ -32,7 +32,7 @@ export default {
     },
     uploadPic() {
       dialog.showOpenDialog({
-        filters: [{ name: 'Images', extensions: ['jpg', 'png'] }],
+        filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }],
         properties: ['openFile', 'multiSelections']
       }).then(result => {
         const { filePaths } = result

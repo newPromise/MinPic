@@ -74,7 +74,7 @@ export default {
         let readData = fs.readFileSync(imgPath)
         let imgStat = fs.statSync(imgPath)
         const { size } = imgStat
-        let imgSize = (size / 1024 / 1024).toFixed(1)
+        let imgSize = (size / 1024 / 1024).toFixed(2)
         const type = imgPath.split('.').pop()
         let baseDataType = type === 'png' ? 'png' : 'jpeg';
         let name = path.parse(imgPath).base
@@ -82,7 +82,7 @@ export default {
           path: imgPath,
           src: `data:image/${baseDataType};base64,${readData.toString('base64')}`,
           size: imgSize,
-          afterCompressSize: '--',
+          afterCompressSize: '',
           name,
           aTime: '2020/4/13'
         }

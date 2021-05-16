@@ -34,7 +34,7 @@ ipcMain.on('send-compress', function(event, config) {
     const compressList = paths.map(imgPath => {
       let imgName = path.parse(imgPath).base
       let { size } = fs.statSync(`${destination}/${imgName}`)
-      let imgSize = (size / 1024 / 1024).toFixed(1)
+      let imgSize = (size / 1024 / 1024).toFixed(2)
       return {
         path: imgPath,
         name: imgName,
