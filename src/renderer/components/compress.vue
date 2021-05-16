@@ -28,6 +28,7 @@ import PicItem from './picItem.vue'
 import UploadPage from './uploadPage.vue'
 const fs = require('fs')
 const path = require('path')
+const { Notification } = require('electron').remote
 export default {
   name: 'compressPage',
   components: {
@@ -41,7 +42,8 @@ export default {
       imgPaths: [],
       imgDatas: [],
       isCompressing: false,
-      compressTypes: ['PNG', 'JPG', 'JPEG']
+      compressTypes: ['PNG', 'JPG', 'JPEG'],
+      notify: null
     }
   },
   methods: {
@@ -104,6 +106,7 @@ export default {
         })
         vm.isCompressing = false
         vm.$message.success('压缩完成😎');
+        vm.notify.show()
       })
       ipcRenderer.send('send-compress', Object.assign(config, { paths: this.imgPaths }))
     },
@@ -111,9 +114,15 @@ export default {
       this.imgPaths.splice(index, 1)
       this.imgDatas.splice(index, 1)
     },
-    mounted() {
+    initNotify() {
+      this.notify = new Notification({
+        title: '压缩任务已完成✨'
+      })
     }
-  }
+  },
+  mounted() {
+      this.initNotify()
+    }
 }
 </script>
 
