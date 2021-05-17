@@ -34,7 +34,7 @@ ipcMain.on('send-compress', function(event, config) {
   const { paths, destination, quality } = config
   gulp.src(paths).pipe(imagemin([
     imagemin.mozjpeg({quality: quality * 100, progressive: true}),
-	  imagemin.optipng({optimizationLevel: quality * 7}),
+	  imagemin.optipng({optimizationLevel: Math.ceil(quality * 7)}),
   ])).pipe(gulp.dest(destination)).on('end', function () {
     const compressList = paths.map(imgPath => {
       let imgName = path.parse(imgPath).base
