@@ -23,14 +23,19 @@ ipcMain.on('send-compress', function(event, config) {
   //   progressive: false, //基线优化
   //   subsample: "default" //子采样:default, disable;
   // })
+
+  // {
+  //   optimizationLevel: quality * 7,
+  //   quality: quality * 100,
+  //   progressive: false, //基线优化
+  //   loops: 6, //循环尝试次数, 默认为6;
+  //   accurate: false //高精度模式
+  // }
   const { paths, destination, quality } = config
-  gulp.src(paths).pipe(imagemin({
-    optimizationLevel: quality * 7,
-    quality: quality * 100,
-    progressive: false, //基线优化
-    loops: 6, //循环尝试次数, 默认为6;
-    accurate: false //高精度模式
-  })).pipe(gulp.dest(destination)).on('end', function () {
+  gulp.src(paths).pipe(imagemin([
+    imagemin.mozjpeg({quality: quality * 100, progressive: true}),
+	  imagemin.optipng({optimizationLevel: quality * 7}),
+  ])).pipe(gulp.dest(destination)).on('end', function () {
     const compressList = paths.map(imgPath => {
       let imgName = path.parse(imgPath).base
       let { size } = fs.statSync(`${destination}/${imgName}`)
