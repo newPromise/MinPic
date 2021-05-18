@@ -1,7 +1,9 @@
 <template>
   <div class="upload-page">
     <div class="upload-area">
-      <div class="upload-background"></div>
+      <div id="drop-area">
+        <div class="upload-background"></div>
+      </div>
       <div class="upload-btns">
         <div class="upload-btn" @click="uploadPic">选择上传图片</div>
         <div class="upload-btn" @click="selectPicDir">选择文件夹</div>
@@ -12,13 +14,67 @@
 
 <script>
 const { dialog } = require('electron').remote
+const fs = require('fs')
 export default {
   name: 'uploadPage',
   data() {
     return {
+      compressTypes: ['PNG', 'JPG', 'JPEG'],
     }
   },
   methods: {
+    getImageFileFromPaths(dirPaths) {
+      let imageList = []
+      const image = require('imageinfo')
+      dirPaths.forEach(dPath => {
+        const files = fs.readdirSync(dPath).filter(filePath => {
+          return !fs.statSync(`${dPath}/${filePath}`).isDirectory()
+        })
+        const readFileList = files.map(filePath => {
+          let isImgFile =
+           this.compressTypes.includes(image(fs.readFileSync(`${dPath}/${filePath}`)).format)
+           if (isImgFile) {
+             return `${dPath}/${filePath}`
+           } else return false
+        })
+        imageList.push(...readFileList.filter(v => v))
+      })
+      return imageList;
+    },
+    initDrop() {
+      const dragWrapper = document.getElementById("drop-area");
+      const image = require('imageinfo')
+      //添加拖拽事件监听器
+      dragWrapper.addEventListener("drop", (e) => {
+          let isEmptyFile = false
+          //阻止默认行为
+          e.preventDefault();
+          //获取文件列表
+          const files = e.dataTransfer.files;
+          // 获取文件路径
+          if(files && files.length > 0) {
+            let dirPaths = []
+            let filePathsArr = []
+            let arrFiles = [...files]
+            console.log('files', files)
+            arrFiles.forEach(({ path: fileP }) => {
+              const isDir = fs.statSync(fileP).isDirectory()
+              isDir && dirPaths.push(fileP)
+              if (!isDir &&  this.compressTypes.includes(image(fs.readFileSync(fileP)).format)) {
+                filePathsArr.push(fileP)
+              }
+            })
+            const dirImgFiles = this.getImageFileFromPaths(dirPaths)
+            this.$emit('upload', [...dirImgFiles, ...filePathsArr])
+          } else {
+            isEmptyFile = true
+          }
+      })
+      //阻止拖拽结束事件默认行为
+      dragWrapper.addEventListener("dragover", (e) => {
+          e.preventDefault();
+      })
+    },
     // 选择图片所在的文件夹
     selectPicDir() {
       dialog.showOpenDialog({
@@ -41,6 +97,9 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.initDrop()
   }
 }
 </script>
@@ -52,6 +111,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    #drop-area {
+      padding: 30px;
+      border: 2px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      &:hover {
+        border-color: #409eff;
+      }
+    }
     .upload-background {
       width: 400px;
       height: 300px;

@@ -32,6 +32,7 @@ ipcMain.on('send-compress', function(event, config) {
   //   accurate: false //高精度模式
   // }
   const { paths, destination, quality } = config
+  console.log('compress params', quality * 100, Math.ceil(quality * 7))
   gulp.src(paths).pipe(imagemin([
     imagemin.mozjpeg({quality: quality * 100, progressive: true}),
 	  imagemin.optipng({optimizationLevel: Math.ceil(quality * 7)}),
@@ -40,6 +41,7 @@ ipcMain.on('send-compress', function(event, config) {
       let imgName = path.parse(imgPath).base
       let { size } = fs.statSync(`${destination}/${imgName}`)
       let imgSize = (size / 1024 / 1024).toFixed(2)
+      console.log('imgName', imgName, imgPath, imgSize)
       return {
         path: imgPath,
         name: imgName,

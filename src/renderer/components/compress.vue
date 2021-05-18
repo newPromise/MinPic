@@ -104,6 +104,7 @@ export default {
           const findImg = vm.imgDatas.find(imgData => imgData.name === compressImg.name)
           findImg.afterCompressSize = compressImg.compressedSize
         })
+        console.log('compressList', compressList)
         vm.isCompressing = false
         vm.$message.success('压缩完成😎');
         vm.notify.show()

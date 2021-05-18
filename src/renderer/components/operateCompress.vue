@@ -4,7 +4,6 @@
       <div class="compress-quality">
         <span class="label">
           压缩质量：{{quality}}%
-          <span v-if="quality === maxQuality">（不压缩）</span>
         </span>
         <el-slider :format-tooltip="formatTooltip" :min="0" :max="maxQuality" :step="1" v-model="quality" :show-tooltip="true"></el-slider>
       </div>
