@@ -7,12 +7,9 @@ ipcMain.on('send-compress', function(event, config) {
   const gulp = require('gulp');
   const imagemin = require('gulp-imagemin');
   // const imageminJpegRecompress = require('imagemin-jpeg-recompress');
-  // const imageminPngquant = require('imagemin-pngquant');
+  const imageminPngquant = require('imagemin-pngquant');
   // const imageminout = require('imagemin-pngout')
-  // let pngq = imageminPngquant({
-  //   quality: [0.5, 0.7], //0-100越大质量越高
-  //   speed: 1, //1-10越大速度越快，质量越差
-  // });
+  
   // const pngout = imageminout()
   // const jpgmin = imageminJpegRecompress({
   //   accurate: false, //高精度模式
@@ -32,10 +29,14 @@ ipcMain.on('send-compress', function(event, config) {
   //   accurate: false //高精度模式
   // }
   const { paths, destination, quality } = config
-  console.log('compress params', quality * 100, Math.ceil(quality * 7))
+  let pngq = imageminPngquant({
+    quality: [quality, quality], //0-100越大质量越高
+    speed: 1, //1-10越大速度越快，质量越差
+  });
   gulp.src(paths).pipe(imagemin([
     imagemin.mozjpeg({quality: quality * 100, progressive: true}),
-	  imagemin.optipng({optimizationLevel: Math.ceil(quality * 7)}),
+	  // imagemin.optipng({optimizationLevel: Math.ceil(quality * 7)}),
+    pngq
   ])).pipe(gulp.dest(destination)).on('end', function () {
     const compressList = paths.map(imgPath => {
       let imgName = path.parse(imgPath).base
