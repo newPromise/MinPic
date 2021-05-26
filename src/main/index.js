@@ -31,7 +31,7 @@ ipcMain.on('send-compress', function(event, config) {
   const { paths, destination, quality } = config
   let pngq = imageminPngquant({
     quality: [quality, quality], //0-100越大质量越高
-    speed: 1, //1-10越大速度越快，质量越差
+    speed: config.speed, //1-10越大速度越快，质量越差
   });
   gulp.src(paths).pipe(imagemin([
     imagemin.mozjpeg({quality: quality * 100, progressive: true}),

@@ -7,6 +7,12 @@
         </span>
         <el-slider :format-tooltip="formatTooltip" :min="0" :max="maxQuality" :step="1" v-model="quality" :show-tooltip="true"></el-slider>
       </div>
+      <div class="compress-quality">
+        <span class="label">
+          压缩速度：{{speed}} (数值越大，压缩速度越快，压缩质量越差，仅对 png 类型图片有效)
+        </span>
+        <el-slider :format-tooltip="v => v" :min="1" :max="maxSpeed" :step="1" v-model="speed" :show-tooltip="true"></el-slider>
+      </div>
       <div class="compress-dir">
         压缩路径：{{destination}}
         <div class="choose-path" @click="choosePath">
@@ -36,6 +42,8 @@ export default {
     return {
       quality: 70,
       maxQuality: 100,
+      speed: 4,
+      maxSpeed: 11,
       destination: ''
     }
   },
@@ -44,7 +52,7 @@ export default {
       return `${val}%`
     },
     compress() {
-      this.$emit('compress', { quality: this.quality / 100, destination: this.destination })
+      this.$emit('compress', { quality: this.quality / 100, destination: this.destination, speed: this.speed })
     },
     choosePath() {
       dialog.showOpenDialog({
