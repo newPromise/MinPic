@@ -112,7 +112,7 @@ export default {
       ipcRenderer.on('log', function (e, { n, d }) {
         console.log(n, d)
       })
-      ipcRenderer.send('send-compress', Object.assign(config, { paths: this.imgPaths }))
+      ipcRenderer.send('start-compress', Object.assign(config, { paths: this.imgPaths }))
     },
     deleteImage(index) {
       this.imgPaths.splice(index, 1)
