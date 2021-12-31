@@ -109,6 +109,9 @@ export default {
         vm.$message.success('压缩完成😎');
         vm.notify.show()
       })
+      ipcRenderer.on('log', function (e, { n, d }) {
+        console.log(n, d)
+      })
       ipcRenderer.send('send-compress', Object.assign(config, { paths: this.imgPaths }))
     },
     deleteImage(index) {

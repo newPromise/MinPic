@@ -31,6 +31,7 @@
 <script>
 const { dialog } = require('electron').remote
 const os = require('os')
+const path = require('path')
 export default {
   props: {
     isCompressing: {
@@ -66,7 +67,7 @@ export default {
   },
   mounted() {
     const homeDir = os.homedir()
-    this.destination = `${homeDir}/Desktop/压缩图片文件夹`
+    this.destination = path.normalize(`${homeDir}/Desktop/压缩图片文件夹`)
   },
 }
 </script>
