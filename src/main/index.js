@@ -1,57 +1,6 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import '../renderer/store'
-const path = require('path')
-const fs = require('fs')
-
-ipcMain.on('start-compress', function(event, config) {
-  const gulp = require('gulp');
-  const imagemin = require('gulp-imagemin');
-  // const imageminJpegRecompress = require('imagemin-jpeg-recompress');
-  const imageminPngquant = require('imagemin-pngquant');
-  // const imageminout = require('imagemin-pngout')
-  
-  // const pngout = imageminout()
-  // const jpgmin = imageminJpegRecompress({
-  //   accurate: false, //高精度模式
-  //   quality: "medium", //图像质量:low, medium, high, veryhigh;
-  //   method: "smallfry", //网格优化:mpe, ssim, ms-ssim , smallfry;
-  //   min: 30, //最低质量
-  //   loops: 6, //循环尝试次数, 默认为6;
-  //   progressive: false, //基线优化
-  //   subsample: "default" //子采样:default, disable;
-  // })
-
-  // {
-  //   optimizationLevel: quality * 7,
-  //   quality: quality * 100,
-  //   progressive: false, //基线优化
-  //   loops: 6, //循环尝试次数, 默认为6;
-  //   accurate: false //高精度模式
-  // }
-  const { paths, destination, quality } = config
-  let pngq = imageminPngquant({
-    quality: [quality, quality], //0-100越大质量越高
-    speed: config.speed, //1-10越大速度越快，质量越差
-  });
-  gulp.src(paths).pipe(imagemin([
-    imagemin.mozjpeg({quality: quality * 100, progressive: true}),
-	  // imagemin.optipng({optimizationLevel: Math.ceil(quality * 7)}),
-    pngq
-  ])).pipe(gulp.dest(destination)).on('end', function () {
-    const compressList = paths.map(imgPath => {
-      let imgName = path.parse(imgPath).base
-      let { size } = fs.statSync(`${destination}/${imgName}`)
-      let imgSize = (size / 1024 / 1024).toFixed(2)
-      console.log('imgName', imgName, imgPath, imgSize)
-      return {
-        path: imgPath,
-        name: imgName,
-        compressedSize: imgSize
-      }
-    })
-    event.reply('compress-success', { compressList })
-  })
-});
+import './compress'
 
 /**
  * Set `__static` path to static files in production
