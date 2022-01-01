@@ -3,7 +3,7 @@ import '../renderer/store'
 const path = require('path')
 const fs = require('fs')
 
-ipcMain.on('send-compress', function(event, config) {
+ipcMain.on('start-compress', function(event, config) {
   const gulp = require('gulp');
   const imagemin = require('gulp-imagemin');
   // const imageminJpegRecompress = require('imagemin-jpeg-recompress');
