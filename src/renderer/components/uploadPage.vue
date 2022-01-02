@@ -1,7 +1,7 @@
 <template>
   <div class="upload-page">
     <div class="upload-area">
-      <div id="drop-area">
+      <div id="drop-area" @mouseenter="whenMoveIntoDropArea">
         <div class="upload-background"></div>
       </div>
       <div class="upload-btns">
@@ -25,6 +25,9 @@ export default {
     }
   },
   methods: {
+    whenMoveIntoDropArea() {
+      this.$message.info('支持拖拽文件哦  ✨🎉✨🎉 2️⃣0️⃣2️⃣2️⃣ 🎉✨🎉✨')
+    },
     getImageFileFromPaths(dirPaths) {
       let imageList = []
       const image = require('imageinfo')
