@@ -19,7 +19,7 @@ export default {
   name: 'uploadPage',
   data() {
     return {
-      compressTypes: ['PNG', 'JPG', 'JPEG'],
+      compressTypes: ['PNG', 'JPG', 'JPEG', 'GIF'],
     }
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
     },
     uploadPic() {
       dialog.showOpenDialog({
-        filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }],
+        filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg', 'gif'] }],
         properties: ['openFile', 'multiSelections']
       }).then(result => {
         const { filePaths } = result

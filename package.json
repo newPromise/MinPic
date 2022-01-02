@@ -55,6 +55,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.15.1",
+    "execa": "5.0.0",
+    "gif-frames": "^1.0.1",
+    "gifsicle": "5.1.0",
     "gulp": "^4.0.0",
     "gulp-imagemin": "^7.1.0",
     "imageinfo": "^1.0.4",

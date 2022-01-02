@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import '../renderer/store'
-import './compress'
+import './compress/compress'
 
 /**
  * Set `__static` path to static files in production
