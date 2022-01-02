@@ -62,7 +62,9 @@
     </el-tabs>
    </div>
    <div class="compress-dir">
-    压缩路径：{{ destination }}
+    压缩路径：<el-button type="text" @click="openDestinationDir">{{
+     destination
+    }}</el-button>
     <div class="choose-path" @click="choosePath">自定义路径</div>
    </div>
   </div>
@@ -106,6 +108,11 @@ export default {
  methods: {
   formatTooltip(val) {
    return `${val}%`;
+  },
+  openDestinationDir() {
+   dialog.showOpenDialog({
+    defaultPath: this.destination,
+   });
   },
   compress() {
    this.$emit("compress", {
@@ -154,6 +161,9 @@ export default {
    }
   }
   .compress-dir {
+   .el-button {
+    padding: 0;
+   }
    .choose-path {
     padding: 5px 10px;
     color: white;

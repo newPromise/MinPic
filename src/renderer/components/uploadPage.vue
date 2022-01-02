@@ -14,12 +14,14 @@
 
 <script>
 const { dialog } = require('electron').remote
+const path = require('path')
 const fs = require('fs')
 export default {
   name: 'uploadPage',
   data() {
     return {
       compressTypes: ['PNG', 'JPG', 'JPEG', 'GIF'],
+      openDirPath: ''
     }
   },
   methods: {
@@ -78,21 +80,25 @@ export default {
     // 选择图片所在的文件夹
     selectPicDir() {
       dialog.showOpenDialog({
+        defaultPath: this.openDirPath,
         properties: ['openDirectory']
       }).then(result => {
         const { filePaths } = result
         if (filePaths && filePaths.length) {
+          this.openDirPath = path.dirname(filePaths[0])
           this.$emit('uploadDir', filePaths)
         }
       })
     },
     uploadPic() {
       dialog.showOpenDialog({
+        defaultPath: this.openDirPath,
         filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg', 'gif'] }],
         properties: ['openFile', 'multiSelections']
       }).then(result => {
         const { filePaths } = result
         if (filePaths && filePaths.length) {
+          this.openDirPath = path.dirname(filePaths[0])
           this.$emit('upload', filePaths)        
         }
       })
