@@ -28,6 +28,7 @@ ipcMain.on('start-compress', async function (event, config) {
       let imgSize = (size / 1024 / 1024).toFixed(2)
       return {
         path: imgPath,
+        compressPath: `${destination}/${imgName}`,
         name: imgName,
         compressedSize: imgSize
       }

@@ -83,7 +83,7 @@
 </template>
 
 <script>
-const { dialog } = require("electron").remote;
+const { dialog, app } = require("electron").remote;
 const os = require("os");
 const path = require("path");
 export default {
@@ -122,6 +122,7 @@ export default {
     colorQuality: 1 - this.colorQuality / 100,
     frameQuality: 1 - this.frameQuality / 100,
    });
+    app.mainWindow.closeFilePreview()
   },
   choosePath() {
    dialog

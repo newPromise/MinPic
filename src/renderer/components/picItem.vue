@@ -10,12 +10,14 @@
     <!-- <div class="pic-create-time col-3">{{img.aTime}}</div> -->
     <div class="pic-operate col-2">
       <i class="el-icon-delete" @click="deleteImage"></i>
+      <i v-show="img.compressed" class="el-icon-view" @click="viewCompressedImg"></i>
       <!-- <i class="el-icon-view" @click="deleteImage"></i> -->
     </div>
   </div>
 </template>
 
 <script>
+const { app } = require('electron').remote
 export default {
   props: {
     img: {
@@ -32,6 +34,9 @@ export default {
     }
   },
   methods: {
+    viewCompressedImg() {
+      app.mainWindow.previewFile(this.img.compressPath);
+    },
     deleteImage() {
       this.$emit('delete', this.index)
     }

@@ -94,6 +94,7 @@ export default {
      size: imgSize,
      afterCompressSize: "",
      name,
+     compressed: false,
      aTime: "2020/4/13",
     };
    });
@@ -115,6 +116,8 @@ export default {
       (imgData) => imgData.name === compressImg.name
      );
      findImg.afterCompressSize = compressImg.compressedSize;
+     findImg.compressPath = compressImg.compressPath
+     findImg.compressed = true;
     });
     console.log("compressList", compressList);
     vm.isCompressing = false;
