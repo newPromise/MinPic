@@ -11,13 +11,15 @@
     <div class="pic-operate col-2">
       <i class="el-icon-delete" @click="deleteImage"></i>
       <i v-show="img.compressed" class="el-icon-view" @click="viewCompressedImg"></i>
+      <i v-show="img.compressed" class="el-icon-copy-document" @click="copyCompressedImg"></i>
       <!-- <i class="el-icon-view" @click="deleteImage"></i> -->
     </div>
   </div>
 </template>
 
 <script>
-const { app } = require('electron').remote
+const { app } = require('electron').remote;
+import { ipcRenderer } from 'electron'
 export default {
   props: {
     img: {
@@ -34,6 +36,13 @@ export default {
     }
   },
   methods: {
+    // 复制压缩的图片
+    copyCompressedImg() {
+      ipcRenderer.send('copy', [this.img.compressPath])
+      ipcRenderer.once('copy-success', () => {
+        this.$message.success('图片已复制')
+      })
+    },
     viewCompressedImg() {
       app.mainWindow.previewFile(this.img.compressPath);
     },

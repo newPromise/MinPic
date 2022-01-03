@@ -1,6 +1,6 @@
 {
   "name": "MinPic",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "newPromise <250621458@qq.com>",
   "description": "An electron-vue project",
   "license": null,
@@ -65,6 +65,7 @@
     "imagemin-pngquant": "^9.0.2",
     "mozjpeg": "^6.0.0",
     "multispinner": "^0.2.1",
+    "plist": "^3.0.4",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
