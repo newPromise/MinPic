@@ -106,6 +106,10 @@ export default {
   };
  },
  methods: {
+  resetBarWid() {
+    const barEl = document.querySelector('.el-tabs__active-bar');
+    barEl && (barEl.style.width = (this.activeCompressType === 'png' ? '62px' : '17px'))
+  },
   formatTooltip(val) {
    return `${val}%`;
   },
@@ -139,6 +143,7 @@ export default {
  mounted() {
   const homeDir = os.homedir();
   this.destination = path.normalize(`${homeDir}/Desktop/压缩图片文件夹`);
+  this.resetBarWid();
  },
 };
 </script>
