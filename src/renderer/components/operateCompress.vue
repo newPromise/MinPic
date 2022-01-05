@@ -92,6 +92,10 @@ export default {
    type: Boolean,
    default: false,
   },
+  imgs: {
+    type: Array,
+    default: []
+  }
  },
  data() {
   return {
@@ -104,6 +108,18 @@ export default {
    maxSpeed: 11,
    destination: "",
   };
+ },
+ watch: {
+   imgs: {
+    deep: true,
+    immediate: true,
+    handler(arrData) {
+      const isOnlyGif = arrData.every(img => img.type === 'gif')
+      this.activeCompressType = isOnlyGif ? 'gif' : 'png'
+      this.$forceUpdate();
+      this.resetBarWid();
+    }
+   }
  },
  methods: {
   resetBarWid() {

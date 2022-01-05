@@ -6,7 +6,7 @@
    @uploadDir="imageDirSelected"
   ></upload-page>
   <div class="compress-pictures" v-show="!isUploadPage">
-   <OpeCom @compress="compressPics" :isCompressing="isCompressing"></OpeCom>
+   <OpeCom @compress="compressPics" :isCompressing="isCompressing" :imgs="imgDatas"></OpeCom>
    <div class="anew-append">
     <el-button type="text" @click="anewSelect">重新选择图片压缩</el-button>
    </div>
@@ -52,7 +52,7 @@ export default {
    imgPaths: [],
    imgDatas: [],
    isCompressing: false,
-   compressTypes: ["PNG", "JPG", "JPEG"],
+   compressTypes: ["PNG", "JPG", "JPEG", "GIF"],
    notify: null,
   };
  },
@@ -89,6 +89,7 @@ export default {
     let baseDataType = type === "png" ? "png" : "jpeg";
     let name = path.parse(imgPath).base;
     return {
+     type,
      path: imgPath,
      src: `data:image/${baseDataType};base64,${readData.toString("base64")}`,
      size: imgSize,
