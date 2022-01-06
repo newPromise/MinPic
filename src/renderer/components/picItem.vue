@@ -4,14 +4,22 @@
       <img :src="img.src" alt="">
       <span class="name">{{img.name}}</span>
     </div>
-    <div class="pic-size col-4">{{img.size}} MB / 
-      {{ img.afterCompressSize ? `${img.afterCompressSize} MB` : '--' }}
+    <div class="pic-size col-4">
+      <el-tooltip effect="dark" :content="getImgKbSize(img)" placement="top">
+        <span>{{img.size}} MB / {{ img.afterCompressSize ? `${img.afterCompressSize} MB` : '--' }}</span>
+      </el-tooltip>
     </div>
     <!-- <div class="pic-create-time col-3">{{img.aTime}}</div> -->
     <div class="pic-operate col-2">
-      <i class="el-icon-delete" @click="deleteImage"></i>
-      <i v-show="img.compressed" class="el-icon-view" @click="viewCompressedImg"></i>
-      <i v-show="img.compressed" class="el-icon-copy-document" @click="copyCompressedImg"></i>
+      <el-tooltip effect="dark" content="删除" placement="top">
+        <i class="el-icon-delete" @click="deleteImage"></i>
+      </el-tooltip>
+      <el-tooltip effect="dark" content="预览" placement="top">
+        <i v-show="img.compressed" class="el-icon-view" @click="viewCompressedImg"></i>
+      </el-tooltip>
+      <el-tooltip effect="dark" content="复制" placement="top">
+        <i v-show="img.compressed" class="el-icon-copy-document" @click="copyCompressedImg"></i>
+      </el-tooltip>
       <!-- <i class="el-icon-view" @click="deleteImage"></i> -->
     </div>
   </div>
@@ -42,6 +50,13 @@ export default {
       ipcRenderer.once('copy-success', () => {
         this.$message.success('图片已复制')
       })
+    },
+    getImgKbSize(img) {
+      function getKb(mb) {
+        if (!mb) return '--'
+        return `${mb * 1024} KB`
+      }
+      return getKb(img.size) + ' / ' + getKb(img.afterCompressSize);
     },
     viewCompressedImg() {
       app.mainWindow.previewFile(this.img.compressPath);
