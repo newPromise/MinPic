@@ -8,7 +8,7 @@
   <div class="compress-pictures" v-show="!isUploadPage">
    <OpeCom @compress="compressPics" :isCompressing="isCompressing" :imgs="imgDatas"></OpeCom>
    <div class="anew-append">
-    <el-button type="text" @click="anewSelect">重新选择图片压缩</el-button>
+    <el-button type="primary" class="operate-btn" @click="anewSelect">重新选择图片压缩</el-button>
    </div>
    <div class="compress-pic-list">
     <div class="list-header">
@@ -148,7 +148,19 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
+.operate-btn {
+  color: white;
+  background: #436ef3;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  word-break: keep-all;
+  border-color: none !important;
+  &:hover {
+   background: #2f5ce6;
+  }
+}
 .compress-page {
  width: 100%;
  height: 100%;
